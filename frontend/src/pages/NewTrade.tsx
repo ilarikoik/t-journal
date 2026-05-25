@@ -101,9 +101,17 @@ export default function NewTrade() {
         </Field>
 
         <Field label="Chart Screenshot">
-          <input type="file" accept="image/*" onChange={handleImage}
-            className="text-sm" style={{ color: '#64748b' }} />
-          {preview && <img src={preview} className="mt-2 rounded-lg max-h-48 object-contain" style={{ border: '1px solid #1e1e2e' }} />}
+        <div>
+  <label className="flex items-center justify-center w-full py-2 rounded-lg cursor-pointer text-sm transition-colors hover:opacity-80"
+    style={{ border: '1px dashed #1e1e2e', color: '#64748b', backgroundColor: '#0a0a0f' }}>
+    {preview ? '📎 Vaihda kuva' : '📎 Lisää screenshot'}
+    <input type="file" accept="image/*" onChange={handleImage} className="hidden" />
+  </label>
+  {preview && (
+    <img src={preview} className="mt-2 rounded-lg max-h-48 object-contain w-full"
+      style={{ border: '1px solid #1e1e2e' }} />
+  )}
+</div>
         </Field>
 
         {/* Live P&L preview */}

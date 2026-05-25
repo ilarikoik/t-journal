@@ -65,6 +65,7 @@ export default function TradeDetail() {
         {trade.imageUrl && (
           <div>
             <p className="text-xs mb-2" style={{ color: '#64748b' }}>Chart</p>
+            <p>haloooo</p>
             <img src={trade.imageUrl} className="rounded-lg w-full object-contain max-h-96"
               style={{ border: '1px solid #1e1e2e' }} />
           </div>
