@@ -96,8 +96,16 @@ export default function NewTrade() {
         </div>
 
         <Field label="Notes">
-          <textarea className={inputCls} style={inputStyle} rows={3} placeholder="Mitä tapahtui, mitä oppit..."
+          <textarea className={inputCls} style={inputStyle} rows={3} placeholder="Mitä tapahtui, mitä opit..."
             value={form.notes} onChange={e => set('notes', e.target.value)} />
+        </Field>
+        <Field label="Trade idea">
+          <textarea className={inputCls} style={inputStyle} rows={3} placeholder="Selitä miksi ostit.."
+             />
+        </Field>
+        <Field label="Tunteet">
+          <textarea className={inputCls} style={inputStyle} rows={3} placeholder="Miltä tuntui treidiä ottaessa?"
+             />
         </Field>
 
         <Field label="Chart Screenshot">

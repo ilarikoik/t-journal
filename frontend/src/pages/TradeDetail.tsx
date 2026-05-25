@@ -47,6 +47,9 @@ export default function TradeDetail() {
             ['Setup', trade.setupTag || '—'],
             ['Entry Date', format(new Date(trade.entryDate), 'MMM d, yyyy HH:mm')],
             ['Exit Date', format(new Date(trade.exitDate), 'MMM d, yyyy HH:mm')],
+            // tänne sitten treidi tunteet treidin jälkeen
+            // miten treidissä kävi ja miksi?
+            // mitä vois parantaa?
           ].map(([label, value]) => (
             <div key={label as string}>
               <p className="text-xs" style={{ color: '#64748b' }}>{label}</p>

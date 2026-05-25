@@ -1,0 +1,12 @@
+
+-- Mahollisuus muokata tallennettua treidiä kuten tekstiä ja muita kohtia
+-- trade idea - miksi ostit selitä aina 
+-- emotion before and after trade? mitä mieltä treidistä sen jälkeen
+-- miten treidissä kävi, miksi
+-- mtiä vois parantaa
+-- muistutus jos traden jälkeisiä kohtia ei ole täytetty - esim keltainen neliö vaakaplyväässä
+-- R2 integraatio jotta kuvat toimivat
+-- entry ja exit datesta kuinka monta päivää treidi kesti ja sitten average hold duration niistä kaikista dashboardiin
+-- sidebar menu jonka voi piilottaa (overview, trades, ..muuta tulevaisuudessa)
+
+-- login ennen julkasua
