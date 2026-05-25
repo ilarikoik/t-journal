@@ -10,7 +10,7 @@ function App() {
       <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#0a0a0f' }}>
         <nav className="border-b px-6 py-4 flex items-center gap-8" style={{ borderColor: '#1e1e2e', backgroundColor: '#111118' }}>
           <span className="text-lg font-bold tracking-tight" style={{ color: '#00d4aa', fontFamily: 'monospace' }}>
-            📈 TradeJournal
+            TradeJournal
           </span>
           <div className="flex gap-6 text-sm">
             {[
