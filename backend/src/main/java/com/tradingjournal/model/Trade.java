@@ -1,0 +1,76 @@
+package com.tradingjournal.model;
+
+import jakarta.persistence.*;
+import lombok.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "trades")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Trade {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, length = 10)
+    private String ticker;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Direction direction;
+
+    @Column(nullable = false)
+    private Double entryPrice;
+
+    @Column(nullable = false)
+    private Double exitPrice;
+
+    @Column(nullable = false)
+    private Integer shares;
+
+    @Column(nullable = false)
+    private LocalDateTime entryDate;
+
+    @Column(nullable = false)
+    private LocalDateTime exitDate;
+
+    private String setupTag;
+
+    @Column(columnDefinition = "TEXT")
+    private String notes;
+
+    private String imageUrl;
+
+    private Double pnl;
+    private Double pnlPercent;
+
+    @Enumerated(EnumType.STRING)
+    private Outcome outcome;
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        calculatePnl();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        calculatePnl();
+    }
+
+    private void calculatePnl() {
+        double multiplier = direction == Direction.SHORT ? -1.0 : 1.0;
+        this.pnl = (exitPrice - entryPrice) * shares * multiplier;
+        this.pnlPercent = ((exitPrice - entryPrice) / entryPrice) * 100 * multiplier;
+        this.outcome = pnl > 0 ? Outcome.WIN : pnl < 0 ? Outcome.LOSS : Outcome.BREAKEVEN;
+    }
+
+    public enum Direction { LONG, SHORT }
+    public enum Outcome { WIN, LOSS, BREAKEVEN }
+}
