@@ -19,7 +19,10 @@ export default function TradeDetail() {
 
   if (!trade) return <p style={{ color: '#64748b' }}>Ladataan...</p>
 
-  const pnlColor = trade.pnl >= 0 ? '#22c55e' : '#ef4444'
+  // const pnlColor = trade.pnl >= 0 ? '#22c55e' : '#ef4444'
+  const pnlColor = !trade.exitPrice || isNaN(trade.exitPrice) 
+  ? '#f59e0b' 
+  : trade.pnl > 0 ? '#22c55e' : '#ef4444'
 
   const handleSave = async () => {
     await tradeService.update(trade.id, form)
@@ -40,14 +43,16 @@ export default function TradeDetail() {
             </span>
           </div>
           <div className="text-right">
-            <p className="text-3xl font-bold font-mono" style={{ color: pnlColor }}>
-            {trade.pnlPercent.toFixed(2)}%
-            </p>
-            <p className="text-sm" style={{ color: pnlColor }}>
-            {trade.pnl >= 0 ? '+' : ''}${trade.pnl.toFixed(2)}</p>
-            <p className="text-xs" style={{ color: '#64748b' }}>
-  *osittaisilla myynneillä ei tarkka $
+          <p className="text-3xl font-bold font-mono" style={{ color: pnlColor }}>
+  {trade.exitPrice && trade.exitPrice !== 0 && trade.pnlPercent != null && !isNaN(trade.pnlPercent) 
+    ? `${trade.pnlPercent.toFixed(2)}%` 
+    : 'Menossa'}
 </p>
+            <p className="text-sm" style={{ color: pnlColor }}>
+            {trade.exitPrice && !isNaN(trade.exitPrice) ? `${trade.pnl >= 0 ? '+' : ''}$${trade.pnl.toFixed(2)}` : ''}</p>
+            <p className="text-xs" style={{ color: '#64748b' }}>
+   {trade.exitPrice ? '*osittaisilla myynneillä ei tarkka $' : ''}
+  </p>
           </div>
         </div>
 
@@ -60,18 +65,25 @@ export default function TradeDetail() {
                // tänne sitten treidi tunteet treidin jälkeen
             // miten treidissä kävi ja miksi?
             // mitä vois parantaa?
-          ] as [string, keyof Trade][]).map(([label, key]) => (
-            <div key={key}>
-              <p className="text-xs" style={{ color: '#64748b' }}>{label}</p>
-              <input
-                value={String(form[key] ?? '')}
-                onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
-                onBlur={handleSave}
-                className="font-mono bg-transparent border-b outline-none w-full"
-                style={{ color: '#e2e8f0', borderColor: '#1e1e2e' }}
-              />
-            </div>
-          ))}
+          ] as [string, keyof Trade][]).map(([label, key]) => {
+            const value = form[key]
+            const displayValue = key === 'exitPrice' && (value == null || isNaN(Number(value)))
+              ? ''
+              : (value != null && value !== 0 ? String(value) : '')
+          
+            return (
+              <div key={key}>
+                <p className="text-xs" style={{ color: '#64748b' }}>{label}</p>
+                <input
+                  value={displayValue}
+                  onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
+                  onBlur={handleSave}
+                  className="font-mono bg-transparent border-b outline-none w-full"
+                  style={{ color: '#e2e8f0', borderColor: '#1e1e2e' }}
+                />
+              </div>
+            )
+          })}
           <div>
             <p className="text-xs" style={{ color: '#64748b' }}>Entry Date</p>
             <p className="font-mono" style={{ color: '#e2e8f0' }}>{format(new Date(trade.entryDate), 'MMM d, yyyy HH:mm')}</p>

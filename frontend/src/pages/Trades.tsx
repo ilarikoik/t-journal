@@ -53,21 +53,19 @@ export default function Trades() {
                   </td>
                   <td className="px-4 py-3 font-mono" style={{ color: '#e2e8f0' }}>${t.entryPrice}</td>
                   <td className="px-4 py-3 font-mono" style={{ color: '#e2e8f0' }}>
-                  {t.exitPrice ? `$${t.exitPrice}` : '—'}
+                  {t.exitPrice && !isNaN(t.exitPrice) ? `$${t.exitPrice}` : '—'}
                 </td>
                   <td className="px-4 py-3 font-mono" style={{ color: '#64748b' }}>{t.shares}</td>
                   <td className="px-4 py-3 font-mono font-bold"
-                    style={{ color: t.pnl >= 0 ? '#22c55e' : '#ef4444' }}>
-                    {/* {t.pnl >= 0 ? '+' : ''}${t.pnl.toFixed(2)}
-                     */}
-                     {/* {t.pnlPercent.toFixed(2)}%
-                     jos exit price on tyhjä ei voi laskea dataa joten korjaa jossain? if exitprice != null niin laske */}
-                   {t.exitPrice && t.pnlPercent != null && !isNaN(t.pnlPercent) 
-                    ? `${t.pnl >= 0 ? '+' : ''}${t.pnlPercent.toFixed(2)}%` 
+                  style={{ color: t.exitPrice && t.pnlPercent != null && !isNaN(t.pnlPercent)
+                    ? (t.pnl >= 0 ? '#22c55e' : '#ef4444')
+                    : '#f59e0b' }}>
+                  {t.exitPrice && t.pnlPercent != null && !isNaN(t.pnlPercent)
+                    ? `${t.pnl >= 0 ? '+' : ''}${t.pnlPercent.toFixed(2)}%`
                     : '—'}
-                  </td>
+                </td>
                   <td className="px-4 py-3" style={{ color: '#64748b' }}>
-                    {format(new Date(t.exitDate), 'MMM d, yyyy')}
+                    {format(new Date(t.entryDate), 'MMM d, yyyy')}
                   </td>
                   <td className="px-4 py-3">
                     <Link to={`/trades/${t.id}`} style={{ color: '#00d4aa' }} className="hover:underline">→</Link>

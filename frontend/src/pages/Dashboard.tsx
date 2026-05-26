@@ -26,12 +26,15 @@ export default function Dashboard() {
   }, [])
 
   // Build cumulative PnL curve
-  const pnlCurve = trades
-    .sort((a, b) => new Date(a.exitDate).getTime() - new Date(b.exitDate).getTime())
-    .reduce<{ date: string; pnl: number }[]>((acc, t) => {
-      const prev = acc[acc.length - 1]?.pnl ?? 0
-      return [...acc, { date: format(new Date(t.exitDate), 'MMM d'), pnl: +(prev + t.pnl).toFixed(2) }]
-    }, [])
+ const pnlCurve = trades
+  .filter(t => t.exitDate && t.pnl != null && !isNaN(t.pnl))
+  .sort((a, b) => new Date(a.exitDate).getTime() - new Date(b.exitDate).getTime())
+  .reduce<{ date: string; pnl: number }[]>((acc, t) => {
+    const prev = acc[acc.length - 1]?.pnl ?? 0
+    return [...acc, { date: format(new Date(t.exitDate), 'MMM d'), pnl: +(prev + t.pnl).toFixed(2) }]
+  }, [])
+
+  const totalPnl = trades.filter(t => t.pnl != null && !isNaN(t.pnl)).reduce((sum, t) => sum + t.pnl, 0).toFixed(2);
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
@@ -40,10 +43,12 @@ export default function Dashboard() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <StatCard label="Total Trades" value={String(stats?.totalTrades ?? '—')} />
         <StatCard label="Win Rate" value={stats ? `${stats.winRate.toFixed(1)}%` : '—'}
-          color={stats && stats.winRate >= 50 ? '#22c55e' : '#ef4444'} />
-        <StatCard label="Total P&L" value={stats ? `$${stats.totalPnl.toFixed(2)}` : '—'}
+          color={stats && stats.winRate >= 30 ? '#22c55e' : '#ef4444'} />
+        <StatCard label="Total P&L" 
+          value={totalPnl}
           color={stats && stats.totalPnl >= 0 ? '#22c55e' : '#ef4444'} />
-        <StatCard label="Profit Factor" value={stats ? stats.profitFactor.toFixed(2) : '—'}
+        <StatCard label="Profit Factor" 
+          value={stats && stats.profitFactor != null && !isNaN(stats.profitFactor) ? stats.profitFactor.toFixed(2) : '—'}
           color={stats && stats.profitFactor >= 1 ? '#00d4aa' : '#ef4444'} />
       </div>
 
