@@ -34,7 +34,7 @@ export default function Dashboard() {
     return [...acc, { date: format(new Date(t.exitDate), 'MMM d'), pnl: +(prev + t.pnl).toFixed(2) }]
   }, [])
 
-  const totalPnl = trades.filter(t => t.pnl != null && !isNaN(t.pnl)).reduce((sum, t) => sum + t.pnl, 0).toFixed(2);
+  const totalPnl = trades.filter(t => t.pnl != null && !isNaN(t.pnl)).reduce((sum, t) => sum + t.pnl, 0).toFixed(2); // joteki se laskee silleen että menossa olevat treidit miinustetaan tosta koska testi datalla yks treidi häviö ja total pnl -767
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
