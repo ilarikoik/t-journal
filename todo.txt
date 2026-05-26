@@ -1,7 +1,10 @@
 
 -- Mahollisuus muokata tallennettua treidiä kuten tekstiä ja muita kohtia
 -- korjaa backendissä että vaaditaan exit date
--- oranssi/keltanen neliö trades kohtaan jos menossa vielä
+-- oranssi/keltanen neliö trades kohtaan jos menossa vielä (esim- exitprice? '' : 'keltainen neliö')
+
+--P&L bugi jos ei oo exit priceä niin tulee -100% ja exit date menee 1970 vuoteen
+
 -- trade idea - miksi ostit selitä aina 
 -- emotion before and after trade? mitä mieltä treidistä sen jälkeen
 -- miten treidissä kävi, miksi

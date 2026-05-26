@@ -40,10 +40,10 @@ public class TradeController {
             @RequestParam String ticker,
             @RequestParam String direction,
             @RequestParam Double entryPrice,
-            @RequestParam Double exitPrice,
+            @RequestParam(required = false) Double exitPrice,
             @RequestParam Integer shares,
             @RequestParam String entryDate,
-            @RequestParam String exitDate,
+            @RequestParam(required = false) String exitDate,
             @RequestParam(required = false) String setupTag,
             @RequestParam(required = false) String notes,
             @RequestParam(required = false) MultipartFile image) throws IOException {
@@ -55,7 +55,7 @@ public class TradeController {
                 .exitPrice(exitPrice)
                 .shares(shares)
                 .entryDate(LocalDateTime.parse(entryDate))
-                .exitDate(LocalDateTime.parse(exitDate))
+                .exitDate(exitDate != null && !exitDate.isBlank() ? LocalDateTime.parse(exitDate) : null)
                 .setupTag(setupTag)
                 .notes(notes)
                 .build();

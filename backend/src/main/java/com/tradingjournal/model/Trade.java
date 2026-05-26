@@ -25,7 +25,7 @@ public class Trade {
     @Column(nullable = false)
     private Double entryPrice;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Double exitPrice;
 
     @Column(nullable = false)
@@ -34,7 +34,7 @@ public class Trade {
     @Column(nullable = false)
     private LocalDateTime entryDate;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDateTime exitDate;
 
     private String setupTag;
