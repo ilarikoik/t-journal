@@ -1,5 +1,7 @@
 
 -- Mahollisuus muokata tallennettua treidiä kuten tekstiä ja muita kohtia
+-- korjaa backendissä että vaaditaan exit date
+-- oranssi/keltanen neliö trades kohtaan jos menossa vielä
 -- trade idea - miksi ostit selitä aina 
 -- emotion before and after trade? mitä mieltä treidistä sen jälkeen
 -- miten treidissä kävi, miksi
