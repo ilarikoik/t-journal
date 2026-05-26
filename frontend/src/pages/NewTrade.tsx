@@ -37,20 +37,31 @@ export default function NewTrade() {
   }
 
   const handleSubmit = async () => {
-    if (!form.ticker || !form.entryDate || !form.exitDate) {
-      setError('Täytä vähintään ticker, entry date ja exit date.')
+    if (!form.ticker || !form.entryDate ) {
+      setError('Täytä vähintään tickerja entry date.')
       return
     }
     setLoading(true)
     try {
       await tradeService.create({ ...form, image: image ?? undefined })
       navigate('/trades')
-    } catch {
-      setError('Virhe tallennuksessa. Onko backend käynnissä?')
-    } finally {
+    } 
+   catch (error: unknown) {
+    if (error instanceof Error) {
+      setError(`Virhe: ${error.message}`)
+    } else {
+      setError('Tuntematon virhe tallennuksessa.')
+    }
+  }
+    finally {
       setLoading(false)
     }
   }
+
+  const handleCancel = () => {
+    navigate('/trades')
+  }
+
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
@@ -82,7 +93,7 @@ export default function NewTrade() {
               value={form.shares || ''} onChange={e => set('shares', parseInt(e.target.value))} />
           </Field>
           <Field label="Setup Tag">
-            <input className={inputCls} style={inputStyle} placeholder="VWAP, Breakout..."
+            <input className={inputCls} style={inputStyle} placeholder="Flag, Bounce, 1D chase..."
               value={form.setupTag} onChange={e => set('setupTag', e.target.value)} />
           </Field>
           <Field label="Entry Date">
@@ -96,16 +107,8 @@ export default function NewTrade() {
         </div>
 
         <Field label="Notes">
-          <textarea className={inputCls} style={inputStyle} rows={3} placeholder="Mitä tapahtui, mitä opit..."
+          <textarea className={inputCls} style={inputStyle} rows={3} placeholder="Miksi otit treidin, mitä mietteitä..."
             value={form.notes} onChange={e => set('notes', e.target.value)} />
-        </Field>
-        <Field label="Trade idea">
-          <textarea className={inputCls} style={inputStyle} rows={3} placeholder="Selitä miksi ostit.."
-             />
-        </Field>
-        <Field label="Tunteet">
-          <textarea className={inputCls} style={inputStyle} rows={3} placeholder="Miltä tuntui treidiä ottaessa?"
-             />
         </Field>
 
         <Field label="Chart Screenshot">
@@ -137,12 +140,19 @@ export default function NewTrade() {
         )}
 
         {error && <p className="text-sm" style={{ color: '#ef4444' }}>{error}</p>}
+        <div className='flex flex-row justify-between p-1 w-full  gap-1'>
 
         <button onClick={handleSubmit} disabled={loading}
           className="w-full py-2.5 rounded-lg font-medium text-sm transition-opacity hover:opacity-80 disabled:opacity-40"
           style={{ backgroundColor: '#00d4aa', color: '#0a0a0f' }}>
           {loading ? 'Tallennetaan...' : 'Save Trade'}
         </button>
+        <button onClick={handleCancel} 
+          className="w-full py-2.5 rounded-lg font-medium text-sm transition-opacity hover:opacity-80 disabled:opacity-40"
+          style={{ backgroundColor: '#1e1e2e', color: '#e2e8f0' }}>
+          {'Takaisin'}
+        </button>
+            </div>
       </div>
     </div>
   )

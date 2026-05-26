@@ -34,7 +34,7 @@ export default function Trades() {
           <table className="w-full text-sm">
             <thead>
               <tr className="text-left" style={{ backgroundColor: '#111118', color: '#64748b' }}>
-                {['Ticker', 'Dir', 'Entry', 'Exit', 'Shares', 'P&L', 'Date', ''].map(h => (
+                {['Ticker', 'Dir', 'Entry', 'Exit', 'Shares', '%', 'Date', ''].map(h => (
                   <th key={h} className="px-4 py-3 font-medium">{h}</th>
                 ))}
               </tr>
@@ -56,7 +56,9 @@ export default function Trades() {
                   <td className="px-4 py-3 font-mono" style={{ color: '#64748b' }}>{t.shares}</td>
                   <td className="px-4 py-3 font-mono font-bold"
                     style={{ color: t.pnl >= 0 ? '#22c55e' : '#ef4444' }}>
-                    {t.pnl >= 0 ? '+' : ''}${t.pnl.toFixed(2)}
+                    {/* {t.pnl >= 0 ? '+' : ''}${t.pnl.toFixed(2)}
+                     */}
+                     {t.pnlPercent.toFixed(2)}%
                   </td>
                   <td className="px-4 py-3" style={{ color: '#64748b' }}>
                     {format(new Date(t.exitDate), 'MMM d, yyyy')}
