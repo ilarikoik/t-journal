@@ -63,6 +63,23 @@ public class TradeService {
         repo.deleteById(id);
     }
 
+    public Trade update(Long id, Trade updated, MultipartFile image) throws IOException {
+        Trade existing = findById(id);
+        existing.setTicker(updated.getTicker());
+        existing.setDirection(updated.getDirection());
+        existing.setEntryPrice(updated.getEntryPrice());
+        existing.setExitPrice(updated.getExitPrice());
+        existing.setShares(updated.getShares());
+        existing.setEntryDate(updated.getEntryDate());
+        existing.setExitDate(updated.getExitDate());
+        existing.setSetupTag(updated.getSetupTag());
+        existing.setNotes(updated.getNotes());
+        if (image != null && !image.isEmpty()) {
+            existing.setImageUrl(saveImage(image));
+        }
+        return repo.save(existing);
+    }
+
     public TradeStatsDto getStats() {
         User user = getCurrentUser();
         List<Trade> trades = repo.findAllByUserOrderByCreatedAtDesc(user);
