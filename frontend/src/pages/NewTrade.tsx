@@ -154,7 +154,7 @@ export default function NewTrade() {
           </Field>
           <Field label="Entry Date">
             <input
-              type="datetime-local"
+              type="date"
               className={inputCls}
               style={inputStyle}
               // style={{
@@ -168,7 +168,7 @@ export default function NewTrade() {
           </Field>
           <Field label="Exit Date">
             <input
-              type="datetime-local"
+              type="date"
               className={inputCls}
               style={inputStyle}
               // style={{
