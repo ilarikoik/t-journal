@@ -47,6 +47,7 @@ export function AppSidebar() {
             >
               {getUsername() || "Käyttäjä"}
             </span>
+            <span>HALOO</span>
           </SidebarHeader>
           <SidebarContent>
             <SidebarGroup>
