@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { tradeService } from "@/services/tradeService";
 import type { Trade } from "@/types/trade";
 import { format } from "date-fns";
-import { Field } from "@base-ui/react/field";
 
 export default function TradeDetail() {
   const { id } = useParams();
@@ -35,28 +34,28 @@ export default function TradeDetail() {
   const handleSave = async () => {
     await tradeService.update(trade.id, form);
   };
-  const handleSavePara = async (updatedForm: Partial<Trade>) => {
-    if (trade?.id == null) return;
-    console.log("date saved");
-    await tradeService.update(trade.id, updatedForm);
-    navigate("/trades");
-  };
+  // const handleSavePara = async (updatedForm: Partial<Trade>) => {
+  //   if (trade?.id == null) return;
+  //   console.log("date saved");
+  //   await tradeService.update(trade.id, updatedForm);
+  //   navigate("/trades");
+  // };
 
-  const exitNow = () => {
-    if (trade.exitPrice == null) {
-      return;
-    }
-    const exitDate = new Date().toISOString().replace("Z", "");
-    setForm((f) => ({ ...f, exitDate }));
-    handleSavePara({ ...form, exitDate });
-  };
+  // const exitNow = () => {
+  //   if (trade.exitPrice == null) {
+  //     return;
+  //   }
+  //   const exitDate = new Date().toISOString().replace("Z", "");
+  //   setForm((f) => ({ ...f, exitDate }));
+  //   handleSavePara({ ...form, exitDate });
+  // };
 
-  const checkBeforeExit = () => {
-    if (trade.exitPrice == null) {
-      alert("Syötä ensin exit price ennen kuin klikkaat Exit now");
-      return;
-    }
-  };
+  // const checkBeforeExit = () => {
+  //   if (trade.exitPrice == null) {
+  //     alert("Syötä ensin exit price ennen kuin klikkaat Exit now");
+  //     return;
+  //   }
+  // };
 
   console.log(trade);
 
