@@ -19,6 +19,7 @@ export default function TradeDetail() {
           setForm(t); // alustetaan form vasta kun data on saatu
         })
         .catch((err) => {
+          console.log("token:", localStorage.getItem("token"));
           console.log("Error:", err.response?.status, err.message);
           navigate("/trades");
         });

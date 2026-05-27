@@ -31,7 +31,6 @@ export const tradeService = {
       })
       .then((r) => r.data);
   },
-
   update: (id: number, data: Partial<TradeFormData>) => {
     const form = new FormData();
     Object.entries(data).forEach(([k, v]) => {
