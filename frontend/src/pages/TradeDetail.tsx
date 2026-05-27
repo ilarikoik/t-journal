@@ -228,9 +228,9 @@ export default function TradeDetail() {
             Miten treidissä kävi
           </p>
           <textarea
-            // value={form.notes ?? ''}
+            value={form.review ?? ""}
             placeholder="Oliko onnistunut treidi? Ottaisitko uudelleen, miksi?"
-            onChange={(e) => setForm((f) => ({ ...f, notes: e.target.value }))}
+            onChange={(e) => setForm((f) => ({ ...f, review: e.target.value }))}
             onBlur={handleSave}
             rows={3}
             className="font-mono bg-transparent border-b outline-none w-full resize-none text-xs"
