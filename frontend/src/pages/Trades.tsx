@@ -3,6 +3,7 @@ import { tradeService } from "@/services/tradeService";
 import type { Trade } from "@/types/trade";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
+import { Trash2 } from "lucide-react";
 
 export default function Trades() {
   const [trades, setTrades] = useState<Trade[]>([]);
@@ -75,7 +76,7 @@ export default function Trades() {
                   }}
                 >
                   <td
-                    className="px-4 py-3 font-mono font-bold"
+                    className="px-4 py-3 font-mono font-bold  flex flex-row justify-start items-start gap-2"
                     style={{ color: "#e2e8f0" }}
                   >
                     <button
@@ -88,10 +89,10 @@ export default function Trades() {
                             ),
                           );
                       }}
-                      className="text-red-400 hover:underline mr-2"
+                      className="text-red-400 hover:text-red-600 transition-colors"
                     >
-                      del
-                    </button>
+                      <Trash2 size={16} />
+                    </button>{" "}
                     {t.ticker}
                   </td>
                   <td className="px-4 py-3">
