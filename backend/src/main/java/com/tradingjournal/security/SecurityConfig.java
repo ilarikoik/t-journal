@@ -42,7 +42,8 @@ public class SecurityConfig {
                     config.setAllowedOrigins(List.of(
                             "http://localhost:5173",
                             "http://localhost:5174",
-                            "https://t-journal.vercel.app"));
+                            "https://t-journal.vercel.app",
+                            "https://t-journal-gr7l.vercel.app"));
                     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     config.setAllowedHeaders(List.of("*"));
                     config.setAllowCredentials(true);
