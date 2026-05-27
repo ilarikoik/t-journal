@@ -67,13 +67,19 @@ public class SecurityConfig {
                 String header = req.getHeader("Authorization");
                 if (header != null && header.startsWith("Bearer ")) {
                     String token = header.substring(7);
+                    System.out.println("Token received: " + token.substring(0, 20) + "...");
                     if (jwtService.isValid(token)) {
+                        System.out.println("JWT valid");
                         String username = jwtService.extractUsername(token);
                         var userDetails = userDetailsService.loadUserByUsername(username);
                         var auth = new UsernamePasswordAuthenticationToken(
                                 userDetails, null, userDetails.getAuthorities());
                         SecurityContextHolder.getContext().setAuthentication(auth);
+                    } else {
+                        System.out.println("JWT INVALID!");
                     }
+                } else {
+                    System.out.println("No auth header!");
                 }
                 chain.doFilter(req, res);
             }
