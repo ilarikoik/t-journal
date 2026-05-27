@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { authService, setToken } from "@/services/authService";
+import {
+  authService,
+  setToken,
+  setUsernameStorage,
+} from "@/services/authService";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -22,6 +26,7 @@ export default function Login() {
         ? await authService.register(username, password)
         : await authService.login(username, password);
       setToken(res.token);
+      setUsernameStorage(username);
       navigate("/");
     } catch {
       setError(
@@ -62,7 +67,6 @@ export default function Login() {
             {isRegister ? "Luo uusi tili" : "Kirjaudu sisään"}
           </p>
         </div>
-
         <div className="space-y-3">
           <input
             className={inputCls}
@@ -81,13 +85,11 @@ export default function Login() {
             onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
           />
         </div>
-
         {error && (
           <p className="text-sm" style={{ color: "#ef4444" }}>
             {error}
           </p>
         )}
-
         <button
           onClick={handleSubmit}
           disabled={loading}
@@ -96,7 +98,6 @@ export default function Login() {
         >
           {loading ? "..." : isRegister ? "Rekisteröidy" : "Kirjaudu"}
         </button>
-
         <p className="text-center text-sm" style={{ color: "#64748b" }}>
           {isRegister ? "Onko sinulla jo tili? " : "Ei tiliä? "}
           <button

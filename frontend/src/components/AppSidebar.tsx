@@ -9,7 +9,12 @@ import {
   SidebarHeader,
   SidebarFooter,
 } from "@/components/ui/sidebar";
-import { getToken, removeToken } from "@/services/authService";
+import {
+  getToken,
+  removeToken,
+  getUsername,
+  removeUsername,
+} from "@/services/authService";
 import { LogOut } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -22,8 +27,11 @@ const items = [
 export function AppSidebar() {
   const navigate = useNavigate();
 
+  console.log(getUsername() + "askdasdads");
+
   const handleLogout = () => {
     removeToken();
+    removeUsername();
     navigate("/login");
   };
 
@@ -37,7 +45,7 @@ export function AppSidebar() {
               className="text-lg font-bold font-mono"
               style={{ color: "#00d4aa" }}
             >
-              TradeJournal
+              {getUsername() || "Käyttäjä"}
             </span>
           </SidebarHeader>
           <SidebarContent>

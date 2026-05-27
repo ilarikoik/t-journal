@@ -4,10 +4,10 @@ import com.tradingjournal.model.User;
 import com.tradingjournal.repository.UserRepository;
 import com.tradingjournal.service.JwtService;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Map;
 
 @RestController
@@ -49,4 +49,5 @@ public class AuthController {
                 .map(u -> ResponseEntity.ok(Map.of("token", jwtService.generateToken(username))))
                 .orElse(ResponseEntity.status(401).body(Map.of("error", "Väärä käyttäjänimi tai salasana")));
     }
+
 }
