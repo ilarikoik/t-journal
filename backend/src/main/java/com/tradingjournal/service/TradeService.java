@@ -74,6 +74,7 @@ public class TradeService {
         existing.setExitDate(updated.getExitDate());
         existing.setSetupTag(updated.getSetupTag());
         existing.setNotes(updated.getNotes());
+        existing.setReview(updated.getReview());
         if (image != null && !image.isEmpty()) {
             existing.setImageUrl(saveImage(image));
         }

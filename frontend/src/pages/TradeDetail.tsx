@@ -242,10 +242,10 @@ export default function TradeDetail() {
               color: "#e2e8f0",
             }}
           />
-          <p className="text-xs" style={{ color: "#64748b" }}>
+          {/* <p className="text-xs" style={{ color: "#64748b" }}>
             Treidin jälkeen
-          </p>
-          <textarea
+          </p> */}
+          {/* <textarea
             // value={form.notes ?? ''}
             placeholder="Mitä mieltä treidistä? Mitkä tunteet jäi?"
             onChange={(e) => setForm((f) => ({ ...f, notes: e.target.value }))}
@@ -259,7 +259,7 @@ export default function TradeDetail() {
               padding: "0.5rem",
               color: "#e2e8f0",
             }}
-          />
+          /> */}
         </div>
       </div>
     </div>

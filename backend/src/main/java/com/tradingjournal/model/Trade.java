@@ -43,6 +43,9 @@ public class Trade {
     @Column(columnDefinition = "TEXT")
     private String notes;
 
+    @Column(columnDefinition = "TEXT")
+    private String review;
+
     private String imageUrl;
 
     private Double pnl;
