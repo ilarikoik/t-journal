@@ -2,6 +2,8 @@ package com.tradingjournal.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -33,10 +35,10 @@ public class Trade {
     private Integer shares;
 
     @Column(nullable = false)
-    private LocalDateTime entryDate;
+    private LocalDate entryDate;
 
     @Column(nullable = true)
-    private LocalDateTime exitDate;
+    private LocalDate exitDate;
 
     private String setupTag;
 
@@ -55,7 +57,7 @@ public class Trade {
     private Outcome outcome;
 
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -64,7 +66,7 @@ public class Trade {
 
     @PrePersist
     public void prePersist() {
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = LocalDate.now();
         calculatePnl();
     }
 

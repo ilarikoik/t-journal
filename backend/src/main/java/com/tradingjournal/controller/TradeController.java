@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -56,8 +57,8 @@ public class TradeController {
                 .entryPrice(entryPrice)
                 .exitPrice(exitPrice)
                 .shares(shares)
-                .entryDate(LocalDateTime.parse(entryDate))
-                .exitDate(exitDate != null && !exitDate.isBlank() ? LocalDateTime.parse(exitDate) : null)
+                .entryDate(LocalDate.parse(entryDate))
+                .exitDate(exitDate != null && !exitDate.isBlank() ? LocalDate.parse(exitDate) : null)
                 .setupTag(setupTag)
                 .notes(notes)
                 .review(review)
@@ -86,8 +87,8 @@ public class TradeController {
                 .entryPrice(entryPrice)
                 .exitPrice(exitPrice)
                 .shares(shares)
-                .entryDate(LocalDateTime.parse(entryDate))
-                .exitDate(exitDate != null && !exitDate.isBlank() ? LocalDateTime.parse(exitDate) : null)
+                .entryDate(LocalDate.parse(entryDate))
+                .exitDate(exitDate != null && !exitDate.isBlank() ? LocalDate.parse(exitDate) : null)
                 .setupTag(setupTag)
                 .notes(notes)
                 .review(review)
