@@ -65,12 +65,29 @@ public class Trade {
     }
 
     private void calculatePnl() {
+        if (exitPrice == null) {
+            this.pnl = null;
+            this.pnlPercent = null;
+            this.outcome = null;
+            return;
+        }
+        // if (exitDate.getYear() < 2020) {
+        // this.pnl = null;
+        // this.pnlPercent = null;
+        // this.outcome = null;
+        // return;
+        // }
         double multiplier = direction == Direction.SHORT ? -1.0 : 1.0;
         this.pnl = (exitPrice - entryPrice) * shares * multiplier;
         this.pnlPercent = ((exitPrice - entryPrice) / entryPrice) * 100 * multiplier;
         this.outcome = pnl > 0 ? Outcome.WIN : pnl < 0 ? Outcome.LOSS : Outcome.BREAKEVEN;
     }
 
-    public enum Direction { LONG, SHORT }
-    public enum Outcome { WIN, LOSS, BREAKEVEN }
+    public enum Direction {
+        LONG, SHORT
+    }
+
+    public enum Outcome {
+        WIN, LOSS, BREAKEVEN
+    }
 }
