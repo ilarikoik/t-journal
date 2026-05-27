@@ -36,6 +36,7 @@ export default function TradeDetail() {
         : "#ef4444";
 
   const handleSave = async () => {
+    console.log("Saving form:", form);
     await tradeService.update(trade.id, form);
   };
   // const handleSavePara = async (updatedForm: Partial<Trade>) => {

@@ -92,7 +92,10 @@ public class TradeService {
                 .mapToDouble(Trade::getPnl).sum();
         double lossPnl = trades.stream().filter(t -> t.getOutcome() == Trade.Outcome.LOSS)
                 .mapToDouble(t -> Math.abs(t.getPnl())).sum();
-        double totalPnl = trades.stream().filter(t -> t.getPnl() != null)
+        // double totalPnl = trades.stream().filter(t -> t.getPnl() != null)
+        // .mapToDouble(Trade::getPnl).sum();
+        double totalPnl = trades.stream()
+                .filter(t -> t.getPnl() != null && !Double.isNaN(t.getPnl()))
                 .mapToDouble(Trade::getPnl).sum();
 
         return TradeStatsDto.builder()
