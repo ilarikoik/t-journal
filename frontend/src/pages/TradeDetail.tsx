@@ -18,7 +18,10 @@ export default function TradeDetail() {
           setTrade(t);
           setForm(t); // alustetaan form vasta kun data on saatu
         })
-        .catch(() => navigate("/trades"));
+        .catch((err) => {
+          console.log("Error:", err.response?.status, err.message);
+          navigate("/trades");
+        });
   }, [id]);
 
   if (!trade) return <p style={{ color: "#64748b" }}>Ladataan...</p>;
