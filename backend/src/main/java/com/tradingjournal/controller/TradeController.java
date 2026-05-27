@@ -47,6 +47,7 @@ public class TradeController {
             @RequestParam(required = false) String exitDate,
             @RequestParam(required = false) String setupTag,
             @RequestParam(required = false) String notes,
+            @RequestParam(required = false) String review,
             @RequestParam(required = false) MultipartFile image) throws IOException {
 
         Trade trade = Trade.builder()
@@ -59,6 +60,7 @@ public class TradeController {
                 .exitDate(exitDate != null && !exitDate.isBlank() ? LocalDateTime.parse(exitDate) : null)
                 .setupTag(setupTag)
                 .notes(notes)
+                .review(review)
                 .build();
 
         return ResponseEntity.ok(service.create(trade, image));
@@ -76,6 +78,7 @@ public class TradeController {
             @RequestParam(required = false) String exitDate,
             @RequestParam(required = false) String setupTag,
             @RequestParam(required = false) String notes,
+            @RequestParam(required = false) String review,
             @RequestParam(required = false) MultipartFile image) throws IOException {
         Trade trade = Trade.builder()
                 .ticker(ticker.toUpperCase())
@@ -87,6 +90,7 @@ public class TradeController {
                 .exitDate(exitDate != null && !exitDate.isBlank() ? LocalDateTime.parse(exitDate) : null)
                 .setupTag(setupTag)
                 .notes(notes)
+                .review(review)
                 .build();
         return ResponseEntity.ok(service.update(id, trade, image));
     }
