@@ -176,7 +176,7 @@ export default function TradeDetail() {
             </p>
             {trade.exitDate == null && (
               <input
-                type="datetime-local"
+                type="date"
                 className="font-mono border-b w-full bg-transparent cursor-pointer"
                 style={{
                   color: "#e2e8f0",
