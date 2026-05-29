@@ -168,7 +168,7 @@ export default function Dashboard() {
           </ResponsiveContainer>
         ) : (
           <p className="text-center py-12 text-sm" style={{ color: "#64748b" }}>
-            Ei vielä päättyneitä treidejä!
+            Näkyvissä kun kaksi tai useampi treidi on suljettu.
           </p>
         )}
       </div>

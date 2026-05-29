@@ -21,13 +21,12 @@ import { NavLink, useNavigate } from "react-router-dom";
 const items = [
   { label: "Dashboard", href: "/" },
   { label: "Trades", href: "/trades" },
+  { label: "Ideas & Notes", href: "/ideas" },
   { label: "New Trade", href: "/trades/new" },
 ];
 
 export function AppSidebar() {
   const navigate = useNavigate();
-
-  console.log(getUsername() + "askdasdads");
 
   const handleLogout = () => {
     removeToken();
@@ -45,7 +44,7 @@ export function AppSidebar() {
               className="text-lg font-bold font-mono"
               style={{ color: "#00d4aa" }}
             >
-              {getUsername() || "Käyttäjä"}
+              {getUsername()?.toUpperCase() || "Käyttäjä"}
             </span>
           </SidebarHeader>
           <SidebarContent>
@@ -63,18 +62,18 @@ export function AppSidebar() {
                   ))}
                 </SidebarMenu>
               </SidebarGroupContent>
-              <SidebarFooter className="p-4">
-                <button
-                  onClick={handleLogout}
-                  className="flex items-center gap-2 text-sm w-full hover:opacity-80 transition-opacity text-red-400"
-                  // style={{ color: "#64748b" }}
-                >
-                  <LogOut size={16} />
-                  Kirjaudu ulos
-                </button>
-              </SidebarFooter>
             </SidebarGroup>
           </SidebarContent>
+          <SidebarFooter className="p-4">
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 text-sm w-full hover:opacity-80 transition-opacity text-red-400 cursor-pointer"
+              // style={{ color: "#64748b" }}
+            >
+              <LogOut size={16} />
+              Kirjaudu ulos
+            </button>
+          </SidebarFooter>
         </Sidebar>
       )}
     </>

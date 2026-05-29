@@ -225,7 +225,7 @@ export default function TradeDetail() {
             }}
           />
           <p className="text-xs" style={{ color: "#64748b" }}>
-            Miten treidissä kävi
+            Miten treidissä kävi, mitä voisi parantaa?
           </p>
           <textarea
             value={form.review ?? ""}

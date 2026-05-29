@@ -13,6 +13,7 @@ import { AppSidebar } from "@/components/AppSidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { getToken } from "./services/authService";
 import Login from "./pages/Login";
+import IdeasAndNotes from "./pages/IdeasAndNotes";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const token = getToken();
@@ -76,6 +77,14 @@ function App() {
                     element={
                       <ProtectedRoute>
                         <TradeDetail />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/ideas"
+                    element={
+                      <ProtectedRoute>
+                        <IdeasAndNotes />
                       </ProtectedRoute>
                     }
                   />

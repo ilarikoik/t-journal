@@ -93,7 +93,9 @@ export default function Trades() {
                     >
                       <Trash2 size={16} />
                     </button>{" "}
-                    {t.ticker}
+                    <Link to={`/trades/${t.id}`} className="hover:underline">
+                      {t.ticker}
+                    </Link>
                   </td>
                   <td className="px-4 py-3">
                     <span
