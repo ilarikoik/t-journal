@@ -44,3 +44,10 @@ export interface TradeStats {
   bestTrade: number;
   worstTrade: number;
 }
+
+export interface IdeaNote {
+  id: number;
+  header: string;
+  content: string;
+  createdAt: string;
+}

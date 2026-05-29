@@ -1,18 +1,13 @@
-import { useMemo, useState } from "react";
-
-interface Note {
-  id: number;
-  title: string;
-  content: string;
-  createdAt: string;
-}
+import { ideasAndNotesService, type IdeaNote } from "@/services/ideasAndNotes";
+import { useEffect, useMemo, useState } from "react";
 
 export default function Notes() {
-  const [notes, setNotes] = useState<Note[]>([]);
+  const [notes, setNotes] = useState<IdeaNote[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [search, setSearch] = useState("");
+  const [error, setError] = useState("");
 
   const inputStyle = {
     backgroundColor: "#0a0a0f",
@@ -20,41 +15,42 @@ export default function Notes() {
     color: "#e2e8f0",
   };
 
-  const handleAdd = () => {
+  useEffect(() => {
+    ideasAndNotesService
+      .getAll()
+      .then(setNotes)
+      .catch(() => setNotes([]));
+  }, []);
+
+  const handleAdd = async () => {
+    console.log("Adding note1:", { title, content });
     if (!title.trim()) return;
-    setNotes((n) => [
-      ...n,
-      {
-        id: Date.now(),
-        title,
-        content,
-        createdAt: new Date().toLocaleDateString("fi-FI"),
-      },
-    ]);
-    setTitle("");
-    setContent("");
-    setShowForm(false);
+    try {
+      console.log("Adding note 2:", { title, content });
+      const created = await ideasAndNotesService.create(title, content);
+      console.log("Adding note 3:", { title, content });
+      setNotes((n) => [created, ...n]);
+      setTitle("");
+      setContent("");
+      setShowForm(false);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "Virhe tallennuksessa.");
+    }
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: number) => {
+    await ideasAndNotesService.delete(id);
     setNotes((n) => n.filter((note) => note.id !== id));
   };
 
-  const filterNotes = (search: string) => {
-    if (search.length > 0) {
-      const filtered = notes.filter((n) => {
-        return (
-          n.title.toLowerCase().includes(search.toLowerCase()) ||
-          n.content.toLowerCase().includes(search.toLowerCase())
-        );
-      });
-      return filtered;
-    }
-    return notes;
-  };
-
-  // usememolla funktio ajetaan vaan kun search tai notes muuttuu, muuten palautetaan edellinen tulos eli ei ajeta aina komponentin renderöinnissä
-  const filteredNotes = useMemo(() => filterNotes(search), [search, notes]);
+  const filteredNotes = useMemo(() => {
+    if (!search.trim()) return notes;
+    return notes.filter(
+      (n) =>
+        n.header.toLowerCase().includes(search.toLowerCase()) ||
+        n.content.toLowerCase().includes(search.toLowerCase()),
+    );
+  }, [search, notes]);
 
   return (
     <div className="max-w-2xl mx-auto space-y-4">
@@ -63,12 +59,12 @@ export default function Notes() {
         <h1 className="text-xl font-bold" style={{ color: "#e2e8f0" }}>
           Ideas & Notes
         </h1>
-        <input
+        {/* <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Etsi muistiinpanoja..."
           className="bg-gray-800 text-gray-300 placeholder:text-gray-500  border-black focus:outline-none focus:ring-2 focus:ring-gray-700 border rounded-lg px-3 py-2 text-sm transition-colors"
-        />
+        /> */}
         <button
           onClick={() => setShowForm((s) => !s)}
           className="text-sm px-4 py-2 rounded-lg font-medium transition-opacity hover:opacity-80"
@@ -77,6 +73,12 @@ export default function Notes() {
           + Uusi muistiinpano
         </button>
       </div>
+
+      {error && (
+        <p className="text-sm" style={{ color: "#ef4444" }}>
+          {error}
+        </p>
+      )}
 
       {showForm && (
         <div
@@ -117,7 +119,7 @@ export default function Notes() {
         </div>
       )}
 
-      {notes.length === 0 && !showForm && (
+      {filteredNotes.length === 0 && !showForm && (
         <p className="text-center py-20 text-sm" style={{ color: "#64748b" }}>
           Ei muistiinpanoja vielä.
         </p>
@@ -132,11 +134,13 @@ export default function Notes() {
           >
             <div className="flex items-start justify-between">
               <p className="font-semibold" style={{ color: "#e2e8f0" }}>
-                {note.title}
+                {note.header}
               </p>
               <div className="flex items-center gap-3">
                 <p className="text-xs" style={{ color: "#64748b" }}>
-                  {note.createdAt}
+                  {note.createdAt
+                    ? new Date(note.createdAt).toLocaleDateString("fi-FI")
+                    : ""}
                 </p>
                 <button
                   onClick={() => handleDelete(note.id)}
