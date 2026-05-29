@@ -54,7 +54,6 @@ export default function Notes() {
 
   return (
     <div className="max-w-2xl mx-auto space-y-4">
-      <p className="text-red-300 text-sm">*Ei vielä yhdistetty tietokantaan*</p>
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold" style={{ color: "#e2e8f0" }}>
           Ideas & Notes
@@ -153,7 +152,7 @@ export default function Notes() {
             </div>
             {note.content && (
               <p
-                className="text-sm whitespace-pre-wrap"
+                className="text-sm whitespace-pre-wrap h-fit overflow-hidden"
                 style={{ color: "#94a3b8" }}
               >
                 {note.content}
