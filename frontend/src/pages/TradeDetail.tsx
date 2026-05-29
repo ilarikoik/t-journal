@@ -3,11 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import { tradeService } from "@/services/tradeService";
 import type { Trade } from "@/types/trade";
 import { format } from "date-fns";
+import { Button } from "@base-ui/react";
+import { Check } from "lucide-react";
 
 export default function TradeDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [trade, setTrade] = useState<Trade | null>(null);
+  const [original, setOriginal] = useState<Partial<Trade>>({});
   const [form, setForm] = useState<Partial<Trade>>({});
 
   useEffect(() => {
@@ -16,6 +19,7 @@ export default function TradeDetail() {
         .getById(Number(id))
         .then((t) => {
           setTrade(t);
+          setOriginal(t);
           setForm(t); // alustetaan form vasta kun data on saatu
         })
         .catch((err) => {
@@ -36,38 +40,25 @@ export default function TradeDetail() {
         : "#ef4444";
 
   const handleSave = async () => {
-    console.log("Saving form:", form);
+    // const hasChanges = Object.keys(form).some(
+    //   (key) => form[key as keyof Trade] !== original[key as keyof Trade],
+    // );
+    const hasChanges = JSON.stringify(form) !== JSON.stringify(original);
+    console.log(hasChanges ? "Saving changes..." : "No changes to save");
+    if (!hasChanges) return;
     await tradeService.update(trade.id, form);
+    setOriginal(form);
   };
-  // const handleSavePara = async (updatedForm: Partial<Trade>) => {
-  //   if (trade?.id == null) return;
-  //   console.log("date saved");
-  //   await tradeService.update(trade.id, updatedForm);
-  //   navigate("/trades");
-  // };
-
-  // const exitNow = () => {
-  //   if (trade.exitPrice == null) {
-  //     return;
-  //   }
-  //   const exitDate = new Date().toISOString().replace("Z", "");
-  //   setForm((f) => ({ ...f, exitDate }));
-  //   handleSavePara({ ...form, exitDate });
-  // };
-
-  // const checkBeforeExit = () => {
-  //   if (trade.exitPrice == null) {
-  //     alert("Syötä ensin exit price ennen kuin klikkaat Exit now");
-  //     return;
-  //   }
-  // };
 
   console.log(trade);
 
   return (
     <div className="max-w-2xl mx-auto space-y-4">
       <button
-        onClick={() => navigate("/trades")}
+        onClick={() => {
+          handleSave();
+          navigate("/trades");
+        }}
         className="text-sm hover:underline"
         style={{ color: "#64748b" }}
       >
@@ -242,24 +233,6 @@ export default function TradeDetail() {
               color: "#e2e8f0",
             }}
           />
-          {/* <p className="text-xs" style={{ color: "#64748b" }}>
-            Treidin jälkeen
-          </p> */}
-          {/* <textarea
-            // value={form.notes ?? ''}
-            placeholder="Mitä mieltä treidistä? Mitkä tunteet jäi?"
-            onChange={(e) => setForm((f) => ({ ...f, notes: e.target.value }))}
-            onBlur={handleSave}
-            rows={3}
-            className="font-mono bg-transparent border-b outline-none w-full resize-none text-xs"
-            style={{
-              backgroundColor: "#0a0a0f",
-              border: "1px solid #1e1e2e",
-              borderRadius: "0.375rem",
-              padding: "0.5rem",
-              color: "#e2e8f0",
-            }}
-          /> */}
         </div>
       </div>
     </div>
