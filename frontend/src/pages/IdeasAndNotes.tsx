@@ -59,12 +59,12 @@ export default function Notes() {
         <h1 className="text-xl font-bold" style={{ color: "#e2e8f0" }}>
           Ideas & Notes
         </h1>
-        {/* <input
+        <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Etsi muistiinpanoja..."
           className="bg-gray-800 text-gray-300 placeholder:text-gray-500  border-black focus:outline-none focus:ring-2 focus:ring-gray-700 border rounded-lg px-3 py-2 text-sm transition-colors"
-        /> */}
+        />
         <button
           onClick={() => setShowForm((s) => !s)}
           className="text-sm px-4 py-2 rounded-lg font-medium transition-opacity hover:opacity-80"
