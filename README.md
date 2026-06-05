@@ -16,6 +16,46 @@ Full-stack swing trading journal. React + TypeScript + Tailwind, Spring Boot + P
 CREATE DATABASE trading_journal;
 ```
 
+```
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL
+);
+```
+
+```
+CREATE TABLE trades (
+    id SERIAL PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT NOW(),
+    direction TEXT,
+    entry_date DATE,
+    entry_price NUMERIC,
+    exit_date DATE,
+    exit_price NUMERIC,
+    image_url TEXT,
+    notes TEXT,
+    outcome TEXT,
+    pnl NUMERIC,
+    pnl_percent NUMERIC,
+    setup_tag TEXT,
+    shares INTEGER,
+    ticker TEXT,
+    user_id INTEGER REFERENCES users(id),
+    review TEXT
+);
+```
+
+```
+CREATE TABLE ideas_and_notes (
+    id SERIAL PRIMARY KEY,
+    header TEXT,
+    content TEXT,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+
 Muokkaa `backend/src/main/resources/application.properties` jos salasana/käyttäjä eri.
 
 ### 2. Backend
