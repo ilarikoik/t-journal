@@ -1,6 +1,6 @@
 # Trading Journal
 
-Full-stack swing trading journal. React + TypeScript + Tailwind (frontend), Spring Boot + PostgreSQL (backend).
+Full-stack swing trading journal. React + TypeScript + Tailwind, Spring Boot + PostgreSQL.
 
 ## Stack
 
