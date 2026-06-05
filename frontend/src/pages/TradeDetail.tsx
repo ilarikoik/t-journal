@@ -3,8 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { tradeService } from "@/services/tradeService";
 import type { Trade } from "@/types/trade";
 import { format } from "date-fns";
-import { Button } from "@base-ui/react";
-import { Check } from "lucide-react";
 
 export default function TradeDetail() {
   const { id } = useParams();
