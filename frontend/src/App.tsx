@@ -21,8 +21,6 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
-const isAuthenticated = getToken() ? true : false;
-
 function App() {
   return (
     <>
@@ -36,22 +34,22 @@ function App() {
 
             <main className="flex-1">
               <div
-                className="border-b px-4 py-3 flex items- justify-between gap-3"
+                className="flex flex-row items-center justify-between px-6 py-4 border-b"
                 style={{ borderColor: "#1e1e2e", backgroundColor: "#111118" }}
               >
-                {isAuthenticated && (
-                  <>
-                    <SidebarTrigger />
-                    <NavLink
-                      to="/"
-                      className="text-lg font-bold font-mono"
-                      style={{ color: "#00d4aa" }}
-                    >
-                      TradeJournal
-                    </NavLink>
-                  </>
-                )}
+                <SidebarTrigger />
+                <NavLink
+                  to="/"
+                  className="text-lg font-bold font-mono"
+                  style={{ color: "#00d4aa" }}
+                >
+                  TradingJournal
+                </NavLink>
               </div>
+              {/* <div
+                className="border-b px-4 py-3 flex items- justify-between gap-3"
+                style={{ borderColor: "#1e1e2e", backgroundColor: "#111118" }}
+              ></div> */}
               <div className="p-6">
                 <Routes>
                   <Route path="/login" element={<ProdLogin />} />

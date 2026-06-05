@@ -176,22 +176,45 @@ export default function Notes() {
               </div>
             </div>
             {note.content && (
+              // <textarea
+              //   onBlur={() => handeleUpdate(note.id, { content: note.content })}
+              //   value={note.content}
+              //   rows={3}
+              //   className="text-sm whitespace-pre-wrap overflow-hidden w-full outline-none resize-none"
+              //   style={{ color: "#94a3b8" }}
+              //   onChange={(e) => {
+              //     const updatedContent = e.target.value;
+              //     setNotes((n) =>
+              //       n.map((n) =>
+              //         n.id === note.id ? { ...n, content: updatedContent } : n,
+              //       ),
+              //     );
+              //   }}
+              // >
+              //   {note.content}
+              // </textarea>
               <textarea
                 onBlur={() => handeleUpdate(note.id, { content: note.content })}
                 value={note.content}
-                className="text-sm whitespace-pre-wrap overflow-hidden w-full h-fit outline-none resize-none"
-                style={{ color: "#94a3b8" }}
+                rows={1}
+                ref={(el) => {
+                  if (el) {
+                    el.style.height = "auto";
+                    el.style.height = el.scrollHeight + "px";
+                  }
+                }}
                 onChange={(e) => {
                   const updatedContent = e.target.value;
+
                   setNotes((n) =>
                     n.map((n) =>
                       n.id === note.id ? { ...n, content: updatedContent } : n,
                     ),
                   );
                 }}
-              >
-                {note.content}
-              </textarea>
+                className="text-sm whitespace-pre-wrap w-full outline-none resize-none overflow-hidden"
+                style={{ color: "#94a3b8" }}
+              />
             )}
           </div>
         ))}
