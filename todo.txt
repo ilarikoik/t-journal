@@ -1,10 +1,7 @@
 
 --P&L bugi jos ei oo exit priceä niin tulee -100% ja exit date menee 1970 vuoteen
 
-
--- trade idea - miksi ostit selitä aina 
--- miten treidissä kävi, miksi
--- mtiä vois parantaa
+-- ideas&notes update 
 
 -- R2 integraatio jotta kuvat toimivat
 -- entry ja exit datesta kuinka monta päivää treidi kesti ja sitten average hold duration niistä kaikista dashboardiin

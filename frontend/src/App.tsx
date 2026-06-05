@@ -12,14 +12,16 @@ import TradeDetail from "@/pages/TradeDetail";
 import { AppSidebar } from "@/components/AppSidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { getToken } from "./services/authService";
-import Login from "./pages/Login";
 import IdeasAndNotes from "./pages/IdeasAndNotes";
+import ProdLogin from "./pages/ProdLogin";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const token = getToken();
   if (!token) return <Navigate to="/login" />;
   return <>{children}</>;
 }
+
+const isAuthenticated = getToken() ? true : false;
 
 function App() {
   return (
@@ -31,23 +33,28 @@ function App() {
             style={{ backgroundColor: "#0a0a0f" }}
           >
             <AppSidebar />
+
             <main className="flex-1">
               <div
                 className="border-b px-4 py-3 flex items- justify-between gap-3"
                 style={{ borderColor: "#1e1e2e", backgroundColor: "#111118" }}
               >
-                <SidebarTrigger />
-                <NavLink
-                  to="/"
-                  className="text-lg font-bold font-mono"
-                  style={{ color: "#00d4aa" }}
-                >
-                  TradeJournal
-                </NavLink>
+                {isAuthenticated && (
+                  <>
+                    <SidebarTrigger />
+                    <NavLink
+                      to="/"
+                      className="text-lg font-bold font-mono"
+                      style={{ color: "#00d4aa" }}
+                    >
+                      TradeJournal
+                    </NavLink>
+                  </>
+                )}
               </div>
               <div className="p-6">
                 <Routes>
-                  <Route path="/login" element={<Login />} />
+                  <Route path="/login" element={<ProdLogin />} />
                   <Route
                     path="/"
                     element={
