@@ -5,7 +5,7 @@ Full-stack swing trading journal. React + TypeScript + Tailwind (frontend), Spri
 ## Stack
 
 - **Frontend**: React 18, TypeScript, Tailwind CSS v4, Vite, Recharts, React Router, Axios
-- **Backend**: Java 21, Spring Boot 3.3, Spring Data JPA, Lombok
+- **Backend**: Java 17, Spring Boot 3.3, Spring Data JPA, Lombok
 - **Database**: PostgreSQL
 
 ## Setup
@@ -49,17 +49,16 @@ npm run dev
 
 ## Ominaisuudet
 
-- ✅ Treidin lisäys (ticker, long/short, entry/exit, shares, päivämäärät)
-- ✅ Chart screenshot -liite
-- ✅ Muistiinpanot + setup tag
-- ✅ Automaattinen P&L -laskenta (myös SHORT)
-- ✅ Dashboard: win rate, total P&L, profit factor, P&L-käyrä
-- ✅ Trade lista taulukossa
-- ✅ Trade detail -näkymä
+-  Treidin lisäys (ticker, long/short, entry/exit, shares, päivämäärät)
+-  Muistiinpanot + setup tag
+-  Automaattinen P&L -laskenta (myös SHORT)
+-  Dashboard: win rate, total P&L, profit factor, P&L-käyrä
+-  Trade lista taulukossa
+-  Trade detail näkymä jossa voi tehdä muutoksia sekä lisätä erilliseen kohtaan miten kävi ja miksi kuten mitä parannettavaa
+-  Chart screenshot -liite (tulossa)
 
 ## Seuraavat askeleet
 
 - [ ] Filtteröinti (päivämäärä, ticker, setup)
-- [ ] Statistiikka per setup tag
 - [ ] CSV export
-- [ ] Kirjautuminen (Spring Security + JWT)
+- [ ] Screenshot toiminnan vieminen loppuun
