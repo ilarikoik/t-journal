@@ -41,4 +41,19 @@ public class IdeasAndNotesService {
         repo.delete(entity);
         return entity;
     }
+
+    public IdeasAndNotes update(Long id, IdeasAndNotes updatedEntity) {
+        IdeasAndNotes existingEntity = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Kohdetta ei löydy"));
+
+        if (updatedEntity.getHeader() != null) {
+            existingEntity.setHeader(updatedEntity.getHeader());
+        }
+
+        if (updatedEntity.getContent() != null) {
+            existingEntity.setContent(updatedEntity.getContent());
+        }
+
+        return repo.save(existingEntity);
+    }
 }

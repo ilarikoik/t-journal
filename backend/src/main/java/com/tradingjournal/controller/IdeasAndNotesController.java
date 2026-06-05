@@ -15,8 +15,10 @@ import com.tradingjournal.service.IdeasAndNotesService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
@@ -42,6 +44,12 @@ public class IdeasAndNotesController {
     public ResponseEntity<IdeasAndNotes> deleteIdeasAndNotes(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<IdeasAndNotes> updateIdeasAndNotes(@PathVariable Long id,
+            @RequestBody IdeasAndNotes updatedEntity) {
+        return ResponseEntity.ok(service.update(id, updatedEntity));
     }
 
 }

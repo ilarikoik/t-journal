@@ -40,17 +40,12 @@ export default function TradeDetail() {
         : "#ef4444";
 
   const handleSave = async () => {
-    // const hasChanges = Object.keys(form).some(
-    //   (key) => form[key as keyof Trade] !== original[key as keyof Trade],
-    // );
     const hasChanges = JSON.stringify(form) !== JSON.stringify(original);
     console.log(hasChanges ? "Saving changes..." : "No changes to save");
     if (!hasChanges) return;
     await tradeService.update(trade.id, form);
     setOriginal(form);
   };
-
-  console.log(trade);
 
   return (
     <div className="max-w-2xl mx-auto space-y-4">
@@ -216,11 +211,11 @@ export default function TradeDetail() {
             }}
           />
           <p className="text-xs" style={{ color: "#64748b" }}>
-            Miten treidissä kävi, mitä voisi parantaa?
+            How did the trade go and why? what could be improved?
           </p>
           <textarea
             value={form.review ?? ""}
-            placeholder="Oliko onnistunut treidi? Ottaisitko uudelleen, miksi?"
+            placeholder="Was trade good or bad and why? what could be improved?"
             onChange={(e) => setForm((f) => ({ ...f, review: e.target.value }))}
             onBlur={handleSave}
             rows={3}

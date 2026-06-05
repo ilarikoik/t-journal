@@ -1,4 +1,5 @@
 import { ideasAndNotesService, type IdeaNote } from "@/services/ideasAndNotes";
+import { Trash2, Plus } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
 export default function Notes() {
@@ -52,6 +53,15 @@ export default function Notes() {
     );
   }, [search, notes]);
 
+  const handeleUpdate = async (id: number, updatedNote: Partial<IdeaNote>) => {
+    try {
+      const updated = await ideasAndNotesService.update(id, updatedNote);
+      setNotes((n) => n.map((n) => (n.id === id ? updated : n)));
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "Virhe päivityksessä.");
+    }
+  };
+
   return (
     <div className="max-w-2xl mx-auto space-y-4">
       <div className="flex items-center justify-between">
@@ -61,15 +71,16 @@ export default function Notes() {
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Etsi muistiinpanoja..."
+          placeholder="Search..."
           className="bg-gray-800 text-gray-300 placeholder:text-gray-500  border-black focus:outline-none focus:ring-2 focus:ring-gray-700 border rounded-lg px-3 py-2 text-sm transition-colors"
         />
         <button
           onClick={() => setShowForm((s) => !s)}
-          className="text-sm px-4 py-2 rounded-lg font-medium transition-opacity hover:opacity-80"
+          className="flex justify-center items-center text-sm px-4 py-2 rounded-lg font-medium transition-opacity hover:opacity-80"
           style={{ backgroundColor: "#00d4aa", color: "#0a0a0f" }}
         >
-          + Uusi muistiinpano
+          <Plus size={12} />
+          <span className="ml-2 font-semibold">New note</span>
         </button>
       </div>
 
@@ -85,14 +96,14 @@ export default function Notes() {
           style={{ backgroundColor: "#111118", borderColor: "#1e1e2e" }}
         >
           <input
-            placeholder="Otsikko"
+            placeholder="Header..."
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="w-full px-3 py-2 rounded-lg text-sm border outline-none font-mono"
             style={inputStyle}
           />
           <textarea
-            placeholder="Sisältö..."
+            placeholder="Content..."
             value={content}
             onChange={(e) => setContent(e.target.value)}
             rows={4}
@@ -105,14 +116,14 @@ export default function Notes() {
               className="px-4 py-2 rounded-lg text-sm font-medium hover:opacity-80"
               style={{ backgroundColor: "#00d4aa", color: "#0a0a0f" }}
             >
-              Tallenna
+              Save
             </button>
             <button
               onClick={() => setShowForm(false)}
               className="px-4 py-2 rounded-lg text-sm font-medium hover:opacity-80"
               style={{ backgroundColor: "#1e1e2e", color: "#e2e8f0" }}
             >
-              Peruuta
+              Cancel
             </button>
           </div>
         </div>
@@ -120,7 +131,8 @@ export default function Notes() {
 
       {filteredNotes.length === 0 && !showForm && (
         <p className="text-center py-20 text-sm" style={{ color: "#64748b" }}>
-          Ei muistiinpanoja vielä.
+          No ideas or notes yet. Click "New Note" to add your thoughts and
+          trading ideas!
         </p>
       )}
 
@@ -132,9 +144,22 @@ export default function Notes() {
             style={{ backgroundColor: "#111118", borderColor: "#1e1e2e" }}
           >
             <div className="flex items-start justify-between">
-              <p className="font-semibold" style={{ color: "#e2e8f0" }}>
+              <textarea
+                onBlur={() => handeleUpdate(note.id, { header: note.header })}
+                className="font-semibold w-full h-fit outline-none resize-none"
+                style={{ color: "#e2e8f0" }}
+                value={note.header}
+                onChange={(e) => {
+                  const updatedHeader = e.target.value;
+                  setNotes((n) =>
+                    n.map((n) =>
+                      n.id === note.id ? { ...n, header: updatedHeader } : n,
+                    ),
+                  );
+                }}
+              >
                 {note.header}
-              </p>
+              </textarea>
               <div className="flex items-center gap-3">
                 <p className="text-xs" style={{ color: "#64748b" }}>
                   {note.createdAt
@@ -146,17 +171,27 @@ export default function Notes() {
                   className="text-xs hover:opacity-80"
                   style={{ color: "#ef4444" }}
                 >
-                  Poista
+                  <Trash2 size={16} />
                 </button>
               </div>
             </div>
             {note.content && (
-              <p
-                className="text-sm whitespace-pre-wrap h-fit overflow-hidden"
+              <textarea
+                onBlur={() => handeleUpdate(note.id, { content: note.content })}
+                value={note.content}
+                className="text-sm whitespace-pre-wrap overflow-hidden w-full h-fit outline-none resize-none"
                 style={{ color: "#94a3b8" }}
+                onChange={(e) => {
+                  const updatedContent = e.target.value;
+                  setNotes((n) =>
+                    n.map((n) =>
+                      n.id === note.id ? { ...n, content: updatedContent } : n,
+                    ),
+                  );
+                }}
               >
                 {note.content}
-              </p>
+              </textarea>
             )}
           </div>
         ))}
