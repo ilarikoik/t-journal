@@ -103,9 +103,12 @@ export default function Dashboard() {
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
-      <h1 className="text-xl font-bold" style={{ color: "#e2e8f0" }}>
-        Dashboard
-      </h1>
+      <div>
+        <h1 className="text-xl font-bold " style={{ color: "#e2e8f0" }}>
+          Dashboard
+        </h1>
+        <p className="text-xs text-slate-400">* Counts only finished trades</p>
+      </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <StatCard
