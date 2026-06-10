@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -82,7 +83,8 @@ public class TradeService {
 
     public TradeStatsDto getStats() {
         User user = getCurrentUser();
-        List<Trade> trades = repo.findAllByUserOrderByCreatedAtDesc(user);
+        List<Trade> trades = repo.findAllByUserOrderByCreatedAtDesc(user).stream().filter(t -> t.getExitDate() != null)
+                .collect(Collectors.toList());
         long total = trades.size();
         if (total == 0)
             return TradeStatsDto.builder().build();
