@@ -8,6 +8,7 @@ import { Trash2 } from "lucide-react";
 export default function Trades() {
   const [trades, setTrades] = useState<Trade[]>([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     tradeService
@@ -19,16 +20,37 @@ export default function Trades() {
 
   if (loading) return <p style={{ color: "#64748b" }}>Ladataan...</p>;
 
+  // const filterredTrades = trades.filter((t) =>
+  //   t.ticker.toLowerCase().includes(search.toLowerCase()),
+  // );
+
+  const filteredTrades = trades
+    .filter((t) => t.ticker.toLowerCase().includes(search.toLowerCase()))
+    .sort((a, b) => {
+      if (!a.exitDate && b.exitDate) return -1;
+      if (a.exitDate && !b.exitDate) return 1;
+      return 0;
+    });
+
   return (
     <div className="max-w-5xl mx-auto space-y-4">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold" style={{ color: "#e2e8f0" }}>
           Trades
         </h1>
+        <input
+          type="text"
+          placeholder="Search..."
+          className="px-3 py-1 rounded-lg bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          style={{ borderColor: "#1e1e2e" }}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
         <Link
           to="/trades/new"
-          className="text-sm px-4 py-2 rounded-lg font-medium transition-opacity hover:opacity-80"
-          style={{ backgroundColor: "#00d4aa", color: "#0a0a0f" }}
+          className="text-sm px-4 py-2 rounded-lg transition-opacity hover:opacity-80 font-bold bg-emerald-600 text-white"
+          // style={{ backgroundColor: "#", color: "white" }}
+          // className="flex justify-center items-center text-sm px-4 py-2 rounded-lg font-medium transition-opacity hover:opacity-80"
         >
           + New Trade
         </Link>
@@ -66,7 +88,7 @@ export default function Trades() {
               </tr>
             </thead>
             <tbody>
-              {trades.map((t, i) => (
+              {filteredTrades.map((t, i) => (
                 <tr
                   key={t.id}
                   className="border-t transition-colors hover:opacity-80"
