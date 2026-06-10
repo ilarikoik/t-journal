@@ -91,7 +91,7 @@ export default function TradeDetail() {
               trade.pnlPercent != null &&
               !isNaN(trade.pnlPercent)
                 ? `${trade.pnlPercent.toFixed(2)}%`
-                : "Menossa"}
+                : "Active"}
             </p>
             <p className="text-sm" style={{ color: pnlColor }}>
               {trade.exitPrice && !isNaN(trade.exitPrice)
