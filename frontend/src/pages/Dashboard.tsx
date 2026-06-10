@@ -65,7 +65,8 @@ export default function Dashboard() {
       .catch(() => setTrades([]));
   }, []);
 
-  // Build cumulative PnL curve
+  console.log("Dashboard trades loaded", trades);
+  console.log("stats trades loaded", stats);
   const pnlCurve = trades
     .filter((t) => t.exitDate && t.pnl != null && !isNaN(t.pnl))
     .sort(
@@ -86,9 +87,20 @@ export default function Dashboard() {
     trades
       .filter((t) => t.exitDate != null && !isNaN(t.pnl))
       .reduce((sum, t) => sum + t.pnl, 0)
-      .toFixed(2) + "$"; // joteki se laskee silleen että menossa olevat treidit miinustetaan tosta koska testi datalla yks treidi häviö ja total pnl -767
+      .toFixed(2) + "$";
 
-  console.log(trades);
+  const avgHoldingTime =
+    trades.length > 0
+      ? trades.reduce((sum, t) => {
+          return (
+            sum +
+            (t.exitDate && t.entryDate
+              ? new Date(t.exitDate).getTime() - new Date(t.entryDate).getTime()
+              : 0)
+          );
+        }, 0) / trades.length
+      : 0;
+
   return (
     <div className="max-w-5xl mx-auto space-y-6">
       <h1 className="text-xl font-bold" style={{ color: "#e2e8f0" }}>
@@ -103,12 +115,21 @@ export default function Dashboard() {
         <StatCard
           label="Win Rate"
           value={stats ? `${stats.winRate.toFixed(1)}%` : "—"}
-          color={stats && stats.winRate >= 30 ? "#22c55e" : "#ef4444"}
+          color={
+            !stats
+              ? "#ef4444"
+              : stats.winRate >= 30
+                ? "#10b981"
+                : stats.winRate >= 20
+                  ? "#f97316"
+                  : "#ef4444"
+          }
         />
         <StatCard
           label="Total P&L"
           value={totalPnl}
-          color={stats && stats.totalPnl >= 0 ? "#22c55e" : "#ef4444"}
+          // color={stats && stats.totalPnl >= 0 ? "#22c55e" : "#ef4444"}
+          color={stats && stats.totalPnl >= 0 ? "#10b981" : "#ef4444"}
         />
         <StatCard
           label="Profit Factor"
@@ -171,6 +192,31 @@ export default function Dashboard() {
             Näkyvissä kun kaksi tai useampi treidi on suljettu.
           </p>
         )}
+      </div>
+      <div className="h-px" style={{ backgroundColor: "#1e1e2e" }} />
+      <div
+        className="p-4 rounded-xl *"
+        style={{ backgroundColor: "#111118", borderColor: "#1e1e2e" }}
+      >
+        <h3 className="mb-3 font-bold">Average Statistics</h3>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <StatCard
+            label="Average Win"
+            value={`${stats?.avgWin ?? "—"}$`}
+            color={stats && stats.avgWin >= 1 ? "#00d4aa" : "#ef4444"}
+          />
+
+          <StatCard
+            label="Average Loss"
+            value={`${stats?.avgLoss ?? "—"}$`}
+            color={stats && stats.avgLoss < 0 ? "#00d4aa" : "#ef4444"}
+          />
+
+          <StatCard
+            label="Average Holding Time"
+            value={`${(avgHoldingTime / (1000 * 60 * 60 * 24)).toFixed(1)} days`}
+          />
+        </div>
       </div>
     </div>
   );
