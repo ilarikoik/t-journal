@@ -202,13 +202,13 @@ export default function Dashboard() {
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           <StatCard
             label="Average Win"
-            value={`${stats?.avgWin ?? "—"}$`}
+            value={`${stats?.avgWin?.toFixed(1) ?? "—"}$`}
             color={stats && stats.avgWin >= 1 ? "#00d4aa" : "#ef4444"}
           />
 
           <StatCard
             label="Average Loss"
-            value={`${stats?.avgLoss ?? "—"}$`}
+            value={`${stats?.avgLoss?.toFixed(1) ?? "—"}$`}
             color={stats && stats.avgLoss < 0 ? "#00d4aa" : "#ef4444"}
           />
 
