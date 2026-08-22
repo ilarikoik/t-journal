@@ -10,8 +10,10 @@ export default function TradeDetail() {
   const [trade, setTrade] = useState<Trade | null>(null);
   const [original, setOriginal] = useState<Partial<Trade>>({});
   const [form, setForm] = useState<Partial<Trade>>({});
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
+    let objectUrl: string | null = null;
     if (id)
       tradeService
         .getById(Number(id))
@@ -25,6 +27,17 @@ export default function TradeDetail() {
           console.log("Error:", err.response?.status, err.message);
           navigate("/trades");
         });
+    if (id) {
+      tradeService.getImage(Number(id)).then((imgUrl) => {
+        if (imgUrl) {
+          objectUrl = imgUrl;
+          setImageUrl(imgUrl);
+        }
+      });
+    }
+    return () => {
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
   }, [id]);
 
   if (!trade) return <p style={{ color: "#64748b" }}>Ladataan...</p>;
@@ -46,7 +59,7 @@ export default function TradeDetail() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto space-y-4">
+    <div className="max-w-4xl mx-auto space-y-4">
       <button
         onClick={() => {
           handleSave();
@@ -227,6 +240,13 @@ export default function TradeDetail() {
             }}
           />
         </div>
+        {imageUrl && (
+          <img
+            src={imageUrl}
+            alt="Trade screenshot"
+            style={{ maxWidth: "100%" }}
+          />
+        )}
       </div>
     </div>
   );

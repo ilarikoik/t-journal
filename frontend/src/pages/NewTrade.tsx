@@ -221,7 +221,6 @@ export default function NewTrade() {
           </div>
         </Field>
 
-        {/* Live P&L preview */}
         {form.entryPrice > 0 && form.exitPrice > 0 && form.shares > 0 && (
           <div
             className="rounded-lg px-4 py-3 text-sm font-mono"

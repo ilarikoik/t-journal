@@ -17,16 +17,33 @@ export const tradeService = {
   getById: (id: number) => api.get<Trade>(`/trades/${id}`).then((r) => r.data),
   getStats: () => api.get<TradeStats>("/trades/stats").then((r) => r.data),
 
+  // create: (data: TradeFormData) => {
+  //   const form = new FormData();
+  //   Object.entries(data).forEach(([k, v]) => {
+  //     if (v !== undefined && v !== null) form.append(k, v as string | Blob);
+  //   });
+  //   return api
+  //     .post<Trade>("/trades", form, {
+  //       headers: { "Content-Type": "multipart/form-data" },
+  //     })
+  //     .then((r) => r.data);
+  // },
   create: (data: TradeFormData) => {
+    const { image, ...tradeFields } = data;
     const form = new FormData();
-    Object.entries(data).forEach(([k, v]) => {
-      if (v !== undefined && v !== null) form.append(k, v as string | Blob);
-    });
+    form.append(
+      "trade",
+      new Blob([JSON.stringify(tradeFields)], { type: "application/json" }),
+    );
+    if (image) form.append("image", image);
     return api
       .post<Trade>("/trades", form, {
         headers: { "Content-Type": "multipart/form-data" },
       })
-      .then((r) => r.data);
+      .then((r) => {
+        console.log("Trade created:", r.data);
+        return r.data;
+      });
   },
   update: (id: number, data: Partial<TradeFormData>) => {
     const form = new FormData();
@@ -41,4 +58,8 @@ export const tradeService = {
   },
 
   delete: (id: number) => api.delete(`/trades/${id}`),
+  getImage: (id: number) =>
+    api
+      .get(`/trades/${id}/image`, { responseType: "blob" })
+      .then((r) => URL.createObjectURL(r.data)),
 };

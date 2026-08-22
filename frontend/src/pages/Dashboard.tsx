@@ -47,7 +47,6 @@ export default function Dashboard() {
       .getStats()
       .then(setStats)
       .catch(() => {
-        // Demo data when backend not running
         setStats({
           totalTrades: 0,
           winRate: 0,
