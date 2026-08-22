@@ -95,10 +95,9 @@ npm run dev
 -  Dashboard: win rate, total P&L, profit factor, P&L-käyrä
 -  Trade lista taulukossa
 -  Trade detail näkymä jossa voi tehdä muutoksia sekä lisätä erilliseen kohtaan miten kävi ja miksi kuten mitä parannettavaa
--  Chart screenshot -liite (tulossa)
+-  Chart screenshot -liite (kesken)
+-  Filtteröinti (päivämäärä, ticker, setup)
 
 ## Seuraavat askeleet
-
-- [ ] Filtteröinti (päivämäärä, ticker, setup)
 - [ ] CSV export
 - [ ] Screenshot toiminnan vieminen loppuun
