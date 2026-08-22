@@ -49,10 +49,15 @@ public class Trade {
     @Column(columnDefinition = "TEXT")
     private String review;
 
-    private String imageUrl;
+    // private String imageUrl;
 
     private Double pnl;
     private Double pnlPercent;
+
+    private String imageName;
+    private String imageType;
+    @Column(columnDefinition = "bytea")
+    private byte[] imageData;
 
     @Enumerated(EnumType.STRING)
     private Outcome outcome;

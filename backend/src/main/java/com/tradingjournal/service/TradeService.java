@@ -36,19 +36,13 @@ public class TradeService {
         return repo.findAllByUserOrderByCreatedAtDesc(getCurrentUser());
     }
 
-    private String saveImage(MultipartFile file) throws IOException {
-        Files.createDirectories(Paths.get(UPLOAD_DIR));
-        String filename = UUID.randomUUID() + "_" + file.getOriginalFilename();
-        Path path = Paths.get(UPLOAD_DIR + filename);
-        Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-        return "/uploads/" + filename;
-    }
-
     public Trade create(Trade trade, MultipartFile image) throws IOException {
+        trade.setUser(getCurrentUser()); // muista asettaa tää varmisti ennen tallennusta
         if (image != null && !image.isEmpty()) {
-            trade.setImageUrl(saveImage(image));
+            trade.setImageName(image.getOriginalFilename());
+            trade.setImageType(image.getContentType());
+            trade.setImageData(image.getBytes());
         }
-        trade.setUser(getCurrentUser());
         return repo.save(trade);
     }
 
@@ -76,7 +70,9 @@ public class TradeService {
         existing.setNotes(updated.getNotes());
         existing.setReview(updated.getReview());
         if (image != null && !image.isEmpty()) {
-            existing.setImageUrl(saveImage(image));
+            existing.setImageName(image.getOriginalFilename());
+            existing.setImageType(image.getContentType());
+            existing.setImageData(image.getBytes());
         }
         return repo.save(existing);
     }

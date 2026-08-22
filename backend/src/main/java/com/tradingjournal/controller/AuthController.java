@@ -41,8 +41,10 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> body) {
+        System.out.println("LoginNNNNNNNNNNNNNNNNNNNN");
         String username = body.get("username");
         String password = body.get("password");
+        System.out.println("Login called with body: " + body);
 
         return userRepository.findByUsername(username)
                 .filter(u -> passwordEncoder.matches(password, u.getPassword()))
